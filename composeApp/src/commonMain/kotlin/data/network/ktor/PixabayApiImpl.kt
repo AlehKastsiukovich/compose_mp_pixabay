@@ -3,7 +3,9 @@ package data.network.ktor
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 
-internal class PixabayApiImpl(private val httpClientProvider: HttpClientProvider) : PixabayApi {
+internal class PixabayApiImpl(
+    private val httpClientProvider: HttpClientProvider
+) : PixabayApi {
 
     override suspend fun getImages(): HitResponse {
         return httpClientProvider.httpClient.get(PIXABAY_BASE_URL + "api/") {

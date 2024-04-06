@@ -58,6 +58,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.stately.common)
         }
 
         iosMain.dependencies {
