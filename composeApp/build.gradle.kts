@@ -59,6 +59,9 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.stately.common)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation("io.coil-kt.coil3:coil-compose:3.0.0-alpha06")
+            implementation("io.coil-kt.coil3:coil-network-ktor:3.0.0-alpha06")
         }
 
         iosMain.dependencies {

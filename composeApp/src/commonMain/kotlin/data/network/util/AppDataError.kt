@@ -1,8 +1,8 @@
 package data.network.util
 
 internal sealed interface AppDataError : AppError {
-    enum class NetworkDataError : AppDataError {
-        COMMON_ERROR
+    sealed class NetworkDataError : AppDataError {
+        data object Common : AppDataError
     }
-    object LocalDataError
+    data object LocalDataError : AppDataError
 }

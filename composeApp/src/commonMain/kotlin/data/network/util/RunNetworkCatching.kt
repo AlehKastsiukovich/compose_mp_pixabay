@@ -5,6 +5,6 @@ internal suspend fun <T> runNetworkCatching(action: suspend () -> T): Result<T, 
         action.invoke()
     }.fold(
         onSuccess = { result: T -> Result.Success(result) },
-        onFailure = { Result.Error(AppDataError.NetworkDataError.COMMON_ERROR) }
+        onFailure = { Result.Error(AppDataError.NetworkDataError.Common) }
     )
 }
