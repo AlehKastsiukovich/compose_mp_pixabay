@@ -11,8 +11,7 @@ internal class PixabayApiImpl(
         return httpClientProvider.httpClient.get(PIXABAY_BASE_URL + "api/") {
             url {
                 parameters.append("key", "42856300-e8e64c17d67878a4c639d42a0")
-                parameters.append("q", "bear")
-                parameters.append("per_page", 20.toString())
+                parameters.append("per_page", 50.toString())
                 parameters.append("page", 1.toString())
             }
         }.body()

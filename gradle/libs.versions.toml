@@ -12,6 +12,7 @@ androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
 compose = "1.6.6"
 compose-plugin = "1.6.10-beta01"
+cupertino = "0.1.0-alpha04"
 junit = "4.13.2"
 kotlin = "1.9.23"
 ktor = "2.3.9"
@@ -22,6 +23,8 @@ lifecycleViewmodelCompose = "2.8.0-alpha01"
 statelyCommon = "2.0.5"
 
 [libraries]
+cupertino = { module = "io.github.alexzhirkevich:cupertino", version.ref = "cupertino" }
+cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertino" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

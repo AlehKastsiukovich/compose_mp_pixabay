@@ -1,66 +1,55 @@
-package ui.viewmodel
+package presentation.viewmodel
 
+import androidx.compose.runtime.isTraceInProgress
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.network.repository.ImageHitModel
 import data.network.repository.PixabayRepository
 import data.network.util.Result
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import presentation.model.UISearchImagesState
+import presentation.model.UISingleImage
 
 internal class SearchImagesViewModel(
     private val pixabayRepository: PixabayRepository,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _state: MutableStateFlow<UISearchImageState?> = MutableStateFlow(null)
-    val state: StateFlow<UISearchImageState?> = _state
+    private val _state: MutableStateFlow<UISearchImagesState> = MutableStateFlow(UISearchImagesState.FullListState())
+    val state: StateFlow<UISearchImagesState> = _state
 
     init {
+        defaultScreenState()
+    }
+
+    private fun defaultScreenState() {
         viewModelScope.launch(dispatcher) {
+            _state.value = UISearchImagesState.FullListState(
+                isLoading = true
+            )
             when (val result = pixabayRepository.getSearchedImages()) {
                 is Result.Error -> {
-                    UISearchImageState(
-                        images = listOf(),
-                        errorMessage = ""
+                    UISearchImagesState.ErrorDateState(
+                        errorMessage = result.error.toString()
                     )
                 }
-
                 is Result.Success -> {
-                    _state.value = UISearchImageState(
+                    _state.value = UISearchImagesState.FullListState(
                         images = result.data.map { imageHitModel ->
-                          imageHitModel.mapToUISingleImage()
+                            imageHitModel.mapToUISingleImage()
                         },
-                        errorMessage = null
+                        isLoading = false
                     )
                 }
             }
         }
-
     }
-
 }
 
-data class UISearchImageState(
-    val images: List<UISingleImage>,
-    val errorMessage: String?
-)
-
-data class UISingleImage(
-    val imageId: Long,
-    val userId: Long,
-    val userName: String,
-    val tags: String,
-    val likes: Int,
-    val downloads: Int,
-    val comments: Int,
-    val previewUrl: String,
-    val previewHeight: Int,
-    val previewWidth: Int,
-    val middleImageUrl: String,
-    val largeImageUrl: String
-)
+//TODO: add loading state
 
 internal fun ImageHitModel.mapToUISingleImage(): UISingleImage {
     return UISingleImage(

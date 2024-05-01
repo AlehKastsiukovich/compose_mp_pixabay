@@ -45,6 +45,7 @@ kotlin {
             implementation(libs.koin.android)
         }
         commonMain.dependencies {
+            implementation(libs.cupertino.adaptive)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
