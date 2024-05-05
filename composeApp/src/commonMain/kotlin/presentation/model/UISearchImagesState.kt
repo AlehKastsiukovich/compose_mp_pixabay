@@ -3,16 +3,17 @@ package presentation.model
 import androidx.compose.runtime.Stable
 
 @Stable
-sealed class UISearchImagesState  {
+sealed class UISearchImagesState {
     @Stable
     data class FullListState(
+        val frontImage: UISingleImage? = null,
         val images: List<UISingleImage> = emptyList(),
         val isLoading: Boolean = false
     ) : UISearchImagesState()
+
     @Stable
     data class ErrorDateState(val errorMessage: String?) : UISearchImagesState()
 }
-
 
 @Stable
 data class UISingleImage(

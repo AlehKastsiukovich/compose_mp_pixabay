@@ -1,13 +1,11 @@
 package presentation.viewmodel
 
-import androidx.compose.runtime.isTraceInProgress
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.network.repository.ImageHitModel
 import data.network.repository.PixabayRepository
 import data.network.util.Result
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -37,10 +35,12 @@ internal class SearchImagesViewModel(
                     )
                 }
                 is Result.Success -> {
+                    val images = result.data.map { imageHitModel ->
+                        imageHitModel.mapToUISingleImage()
+                    }
                     _state.value = UISearchImagesState.FullListState(
-                        images = result.data.map { imageHitModel ->
-                            imageHitModel.mapToUISingleImage()
-                        },
+                        frontImage = images.firstOrNull(),
+                        images = images.drop(1),
                         isLoading = false
                     )
                 }
@@ -48,8 +48,6 @@ internal class SearchImagesViewModel(
         }
     }
 }
-
-//TODO: add loading state
 
 internal fun ImageHitModel.mapToUISingleImage(): UISingleImage {
     return UISingleImage(

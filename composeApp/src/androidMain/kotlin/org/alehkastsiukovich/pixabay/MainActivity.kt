@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AdaptiveTheme(
-                target = Theme.Cupertino,
+                target = Theme.Material3,
                 material = MaterialThemeSpec.Default(),
                 cupertino = CupertinoThemeSpec.Default(),
                 content = { App(viewModel.state) }
